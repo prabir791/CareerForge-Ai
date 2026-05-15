@@ -38,19 +38,26 @@ async function registerUserController(req, res) {
     const token = jwt.sign(
                 { id: newUser._id, username: newUser.username },
                 process.env.JWT_SECRET,
-                { expiresIn: "1d" }
+                { expiresIn: "7d" }
             )
     
-    res.cookie("token",token)
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: false, // Set to true if using HTTPS
+        sameSite: "lax",
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        path:"/"
+    });
 
 
-    res.status(201).json({
+    res.status(200).json({
         message: "User registered successfully",
+        token,
         user: {
             id: newUser._id,
             username: newUser.username,
             email: newUser.email
-        }
+        } 
     });
 
 }
@@ -81,10 +88,17 @@ async function loginUserController(req, res) {
                 process.env.JWT_SECRET,
                 { expiresIn: "1d" }
             )
-        res.cookie("token", token)
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: false, // Set to true if using HTTPS
+        sameSite: "lax",
+        maxAge: 1 * 24 * 60 * 60 * 1000 ,// 1 day
+        path:"/"
+    });
 
     res.status(200).json({
         message: "User logged in successfully",
+        token,
         user: {
             id: user._id,
             username: user.username,
@@ -113,7 +127,7 @@ async function logoutUserController(req, res) {
     }
 
     // clear cookie if present
-    res.clearCookie("token");
+    res.clearCookie("token", { path: "/" });
     res.status(200).json({
         message: "User logged out successfully"
     });
