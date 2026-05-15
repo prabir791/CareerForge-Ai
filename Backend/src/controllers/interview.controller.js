@@ -1,5 +1,5 @@
 const pdfParse = require("pdf-parse");
-const { generateInterviewReport } = require("../services/ai.service");
+const { generateInterviewReport, generateResumePdf } = require("../services/ai.service");
 const interviewReportModel = require("../models/interviewReport.model");
 
 async function generateInterviewReportController(req, res) {
@@ -8,12 +8,8 @@ async function generateInterviewReportController(req, res) {
             return res.status(400).json({ message: "Resume file is required" });
         }
 
-        const pdfParser = new pdfParse.PDFParse(Uint8Array.from(req.file.buffer));
-        const resumeText = await pdfParser.getText();
-        
-        // If resumeText is an object with a text property (as implied by your code), use that.
-        // Otherwise, use resumeText itself.
-        const resumeContent = typeof resumeText === 'object' ? resumeText.text : resumeText;
+        const pdfData = await pdfParse(req.file.buffer);
+        const resumeContent = (pdfData && pdfData.text) ? pdfData.text : String(req.file.buffer);
 
         const { selfDescription, jobDescription } = req.body;
 
@@ -41,6 +37,74 @@ async function generateInterviewReportController(req, res) {
     }
 }
 
+
+async function getReportByIdController(req, res) {
+    try {
+        const { id } = req.params;
+        const report = await interviewReportModel.findById(id);
+
+        if (!report) {
+            return res.status(404).json({ message: "Interview report not found" });
+        }
+
+        if (String(report.user) !== String(req.user.id)) {
+            return res.status(403).json({ message: "Forbidden" });
+        }
+
+        res.json({ interviewReport: report });
+    } catch (error) {
+        console.error("Error in getReportByIdController:", error);
+        res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+}
+
+
+async function getAllReportsController(req, res) {
+    try {
+        const reports = await interviewReportModel.find({ user: req.user.id }).sort({ createdAt: -1 });
+        res.json({ interviewReports: reports });
+    } catch (error) {
+        console.error("Error in getAllReportsController:", error);
+        res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+}
+
+
+async function generateResumePdfController(req, res) {
+    try {
+        const { id } = req.params;
+        const report = await interviewReportModel.findById(id);
+
+        if (!report) {
+            return res.status(404).json({ message: "Interview report not found" });
+        }
+
+        if (String(report.user) !== String(req.user.id)) {
+            return res.status(403).json({ message: "Forbidden" });
+        }
+
+        const pdfBuffer = await generateResumePdf({
+            resume: report.resume,
+            selfDescription: report.selfDescription,
+            jobDescription: report.jobDescription
+        });
+
+        res.set({
+            'Content-Type': 'application/pdf',
+            'Content-Disposition': `attachment; filename=resume_${id}.pdf`,
+            'Content-Length': pdfBuffer.length
+        });
+
+        res.send(pdfBuffer);
+    } catch (error) {
+        console.error("Error in generateResumePdfController:", error);
+        res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+}
+
 module.exports = {
-    generateInterviewReportController
+    generateInterviewReportController,
+    getReportByIdController,
+    getAllReportsController,
+    generateResumePdfController
 };
