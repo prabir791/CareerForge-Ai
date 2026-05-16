@@ -41,18 +41,14 @@ async function generateInterviewReport({ resume, selfDescription, jobDescription
                         Job Description: ${jobDescription}
 `
 
-    const schema = zodToJsonSchema(interviewReportSchema);
-    delete schema.$schema;
-    delete schema.definitions;
-
     const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-3-flash-preview",
         contents: prompt,
-        config: { 
+        config: {
             responseMimeType: "application/json",
-            responseSchema: schema,
+            responseSchema: zodToJsonSchema(interviewReportSchema),
         }
-    }) 
+    })
 
     return JSON.parse(response.text)
 
@@ -62,9 +58,7 @@ async function generateInterviewReport({ resume, selfDescription, jobDescription
 
 
 async function generatePdfFromHtml(htmlContent) {
-    const browser = await puppeteer.launch({
-        args: ["--no-sandbox", "--disable-setuid-sandbox"]
-    })
+    const browser = await puppeteer.launch()
     const page = await browser.newPage();
     await page.setContent(htmlContent, { waitUntil: "networkidle0" })
 
@@ -101,16 +95,12 @@ async function generateResumePdf({ resume, selfDescription, jobDescription }) {
                         The resume should not be so lengthy, it should ideally be 1-2 pages long when converted to PDF. Focus on quality rather than quantity and make sure to include all the relevant information that can increase the candidate's chances of getting an interview call for the given job description.
                     `
 
-    const schema = zodToJsonSchema(resumePdfSchema);
-    delete schema.$schema;
-    delete schema.definitions;
-
     const response = await ai.models.generateContent({
-        model: "gemini-3.1-flash-live-preview",
+        model: "gemini-3-flash-preview",
         contents: prompt,
         config: {
             responseMimeType: "application/json",
-            responseSchema: schema,
+            responseSchema: zodToJsonSchema(resumePdfSchema),
         }
     })
 
@@ -123,7 +113,4 @@ async function generateResumePdf({ resume, selfDescription, jobDescription }) {
 
 }
 
-module.exports = {
-    generateInterviewReport,
-    generateResumePdf
-}
+module.exports = { generateInterviewReport, generateResumePdf }

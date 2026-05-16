@@ -11,15 +11,28 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  const handleGenerateReport = async () => {
+ const handleGenerateReport = async () => {
+  try {
     const resumeFile = resumeInputRef.current.files[0];
+
     const data = await generateReport({
       jobDescription,
       selfDescription,
       resumeFile,
     });
-    navigate(`/interview/${data.interviewReport._id}`);
-  };
+
+    console.log("FULL DATA",data);
+
+    if (!data || !data.interviewReport) { 
+      console.error("Interview report not generated");
+      return;
+    }
+
+    navigate(`/interview/${data._id}`);
+  } catch (error) {
+    console.error("Generate report failed:", error);
+  }
+};
 
   if (loading) {
     return (
