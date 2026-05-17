@@ -68,12 +68,48 @@ const Interview = () => {
         }
     }, [ interviewId ])
 
+    const handleTiltMove = (e) => {
+        const card = e.currentTarget;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        // Max tilt is 2 degrees for large dashboard card
+        const rotateX = ((y - centerY) / centerY) * -2; 
+        const rotateY = ((x - centerX) / centerX) * 2;
+        
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.005, 1.005, 1.005)`;
+    };
+
+    const handleTiltLeave = (e) => {
+        const card = e.currentTarget;
+        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+    };
+
 
 
     if (loading || !report) {
         return (
             <main className='loading-screen'>
-                <h1>Loading your interview plan...</h1>
+                {/* Dynamic Background Elements */}
+                <div className="bg-shape bg-shape-1"></div>
+                <div className="bg-shape bg-shape-2"></div>
+                <div className="bg-shape bg-shape-3"></div>
+
+                <div className="loader-container">
+                    <div className="loader-spinner">
+                        <div className="spinner-inner spinner-one"></div>
+                        <div className="spinner-inner spinner-two"></div>
+                        <div className="spinner-inner spinner-three"></div>
+                        <div className="spinner-core">AI</div>
+                    </div>
+                    
+                    <h1 className="loading-text">
+                        Loading your <span className="highlight">Interview Plan</span>
+                    </h1>
+                    <p className="loading-sub">Analyzing job specifications & mapping skill alignment...</p>
+                </div>
             </main>
         )
     }
@@ -85,7 +121,16 @@ const Interview = () => {
     console.log(report);
     return (
         <div className='interview-page'>
-            <div className='interview-layout'>
+            {/* Dynamic Background Elements */}
+            <div className="bg-shape bg-shape-1"></div>
+            <div className="bg-shape bg-shape-2"></div>
+            <div className="bg-shape bg-shape-3"></div>
+
+            <div 
+                className='interview-layout'
+                onMouseMove={handleTiltMove}
+                onMouseLeave={handleTiltLeave}
+            >
 
                 {/* ── Left Nav ── */}
                 <nav className='interview-nav'>
