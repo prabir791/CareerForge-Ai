@@ -54,11 +54,21 @@
         100% { transform: translate(-40%, -40%) scale(1.2); }
     }
 
+    /* Main Visual Centerpiece */
+    .loader-centerpiece {
+        position: relative;
+        width: 480px;
+        height: 480px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     /* Concentric Spinning Neon Loading Rings */
     .loader-ring {
         position: absolute;
-        width: 280px;
-        height: 280px;
+        width: 440px;
+        height: 440px;
         border-radius: 50%;
         border: 2px solid transparent;
         border-top: 2px solid #00f2fe; /* Cyan top border */
@@ -69,8 +79,8 @@
 
     .loader-ring-inner {
         position: absolute;
-        width: 250px;
-        height: 250px;
+        width: 400px;
+        height: 400px;
         border-radius: 50%;
         border: 2px solid transparent;
         border-left: 2px solid rgba(0, 242, 254, 0.3);
@@ -90,6 +100,7 @@
 
     /* Neon Logo Styling */
     .logo-wrapper {
+        position: absolute;
         z-index: 10;
         display: flex;
         align-items: center;
@@ -106,7 +117,7 @@
         color: #ffffff;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 16px;
         opacity: 0;
         animation: 
             fade-in 1.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -116,6 +127,23 @@
             0 0 20px rgba(0, 242, 254, 0.6),
             0 0 35px rgba(0, 242, 254, 0.4),
             0 0 50px rgba(255, 0, 127, 0.3);
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.85)) drop-shadow(0 0 8px rgba(255, 0, 127, 0.3));
+            animation: icon-glow 3s infinite alternate ease-in-out;
+        }
+    }
+
+    @keyframes icon-glow {
+        0% {
+            filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.7)) drop-shadow(0 0 6px rgba(255, 0, 127, 0.2));
+        }
+        100% {
+            filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.95)) drop-shadow(0 0 12px rgba(255, 0, 127, 0.5));
+        }
     }
 
     /* Bracket styling for high-tech accentuation */
@@ -177,7 +205,7 @@
 
     /* Progress Subtitle text */
     .loading-subtitle {
-        margin-top: 180px;
+        margin-top: 2.5rem;
         color: rgba(255, 255, 255, 0.4);
         font-size: 0.8rem;
         letter-spacing: 4px;
