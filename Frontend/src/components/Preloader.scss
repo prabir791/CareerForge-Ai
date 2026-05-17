@@ -62,6 +62,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        perspective: 1200px;
+        transform-style: preserve-3d;
     }
 
     /* Concentric Spinning Neon Loading Rings */
@@ -105,8 +107,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transform: scale(0.95);
-        animation: scale-up 1.8s forwards cubic-bezier(0.16, 1, 0.3, 1);
+        opacity: 0;
+        animation: scale-up 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     .logo-text {
@@ -118,10 +120,7 @@
         display: flex;
         align-items: center;
         gap: 16px;
-        opacity: 0;
-        animation: 
-            fade-in 1.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1),
-            neon-flicker 4s infinite alternate ease-in-out;
+        animation: neon-flicker 4s infinite alternate ease-in-out;
         text-shadow: 
             0 0 10px rgba(255, 255, 255, 0.8),
             0 0 20px rgba(0, 242, 254, 0.6),
@@ -167,8 +166,20 @@
 
     /* Keyframe Animations */
     @keyframes scale-up {
-        0% { transform: scale(0.9); }
-        100% { transform: scale(1.05); }
+        0% {
+            transform: scale(0.05) translateZ(-800px);
+            filter: blur(25px);
+            opacity: 0;
+        }
+        20% {
+            opacity: 0.2;
+            filter: blur(12px);
+        }
+        100% {
+            transform: scale(1) translateZ(0);
+            filter: blur(0px);
+            opacity: 1;
+        }
     }
 
     @keyframes fade-in {
