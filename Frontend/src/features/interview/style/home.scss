@@ -334,6 +334,88 @@ $font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, s
     }
 }
 
+.uploaded-file-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem;
+    background-color: rgba(30, 37, 53, 0.45);
+    border: 2px solid rgba(225, 3, 77, 0.35);
+    border-radius: 0.6rem;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        border-color: rgba(225, 3, 77, 0.7);
+        box-shadow: 0 8px 32px 0 rgba(225, 3, 77, 0.15);
+    }
+
+    .file-info-container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .file-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        background: rgba(225, 3, 77, 0.1);
+        border-radius: 10px;
+        border: 1px solid rgba(225, 3, 77, 0.2);
+        color: $accent;
+        box-shadow: 0 4px 12px rgba(225, 3, 77, 0.15);
+    }
+
+    .file-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        max-width: 180px;
+
+        .file-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: $text-primary;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-size {
+            font-size: 0.75rem;
+            color: $text-muted;
+            margin: 0;
+        }
+    }
+
+    .remove-file-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: $text-muted;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: rgba(225, 3, 77, 0.15);
+            border-color: $accent;
+            color: #ffffff;
+            transform: rotate(90deg);
+        }
+    }
+}
+
 // ── OR Divider ────────────────────────────────────────────────────────────────
 .or-divider {
     display: flex;
