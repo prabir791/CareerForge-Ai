@@ -10,15 +10,15 @@ function App() {
   const [fadeOut, setFadeOut] = useState(false)
 
   useEffect(() => {
-    // Start fading out the preloader at 2.2 seconds
+    // Start fading out the preloader at 1.4 seconds
     const fadeTimer = setTimeout(() => {
       setFadeOut(true)
-    }, 2200)
+    }, 1400)
 
-    // Completely remove the preloader from layout at 2.8 seconds
+    // Completely remove the preloader from layout at 2.0 seconds
     const removeTimer = setTimeout(() => {
       setShowPreloader(false)
-    }, 2800)
+    }, 2000)
 
     return () => {
       clearTimeout(fadeTimer)
