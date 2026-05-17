@@ -1,0 +1,190 @@
+/* Preloader Scoped Stylesheet */
+.preloader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #080a0f; /* Deep, nearly black dark mode bg */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999; /* Float above absolutely everything */
+    overflow: hidden;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
+    opacity: 1;
+    visibility: visible;
+
+    &.fade-out {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    /* Ambient Background Radial Glows */
+    .ambient-glow-cyan {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(0, 242, 254, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+        top: 50%;
+        left: 50%;
+        transform: translate(-70%, -60%);
+        filter: blur(50px);
+        pointer-events: none;
+        animation: shift-glow 8s infinite alternate ease-in-out;
+    }
+
+    .ambient-glow-magenta {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(255, 0, 127, 0.06) 0%, rgba(0, 0, 0, 0) 70%);
+        top: 50%;
+        left: 50%;
+        transform: translate(-30%, -40%);
+        filter: blur(50px);
+        pointer-events: none;
+        animation: shift-glow 8s infinite alternate-reverse ease-in-out;
+    }
+
+    @keyframes shift-glow {
+        0% { transform: translate(-60%, -50%) scale(1); }
+        100% { transform: translate(-40%, -40%) scale(1.2); }
+    }
+
+    /* Concentric Spinning Neon Loading Rings */
+    .loader-ring {
+        position: absolute;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        border-top: 2px solid #00f2fe; /* Cyan top border */
+        border-bottom: 2px solid #ff007f; /* Magenta bottom border */
+        filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.4)) drop-shadow(0 0 12px rgba(255, 0, 127, 0.4));
+        animation: spin 3s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite;
+    }
+
+    .loader-ring-inner {
+        position: absolute;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        border-left: 2px solid rgba(0, 242, 254, 0.3);
+        border-right: 2px solid rgba(255, 0, 127, 0.3);
+        animation: spin-reverse 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    @keyframes spin-reverse {
+        0% { transform: rotate(360deg); }
+        100% { transform: rotate(0deg); }
+    }
+
+    /* Neon Logo Styling */
+    .logo-wrapper {
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: scale(0.95);
+        animation: scale-up 1.8s forwards cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .logo-text {
+        font-size: 1.85rem;
+        font-weight: 950;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        opacity: 0;
+        animation: 
+            fade-in 1.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1),
+            neon-flicker 4s infinite alternate ease-in-out;
+        text-shadow: 
+            0 0 10px rgba(255, 255, 255, 0.8),
+            0 0 20px rgba(0, 242, 254, 0.6),
+            0 0 35px rgba(0, 242, 254, 0.4),
+            0 0 50px rgba(255, 0, 127, 0.3);
+    }
+
+    /* Bracket styling for high-tech accentuation */
+    .bracket {
+        color: #ff007f; /* High-intensity Magenta */
+        font-weight: 700;
+        font-size: 2.2rem;
+        animation: bracket-pulse 2s infinite alternate ease-in-out;
+        text-shadow: 
+            0 0 10px rgba(255, 0, 127, 0.8),
+            0 0 25px rgba(255, 0, 127, 0.5);
+    }
+
+    .bracket-left {
+        margin-right: 4px;
+    }
+
+    .bracket-right {
+        margin-left: 4px;
+    }
+
+    /* Keyframe Animations */
+    @keyframes scale-up {
+        0% { transform: scale(0.9); }
+        100% { transform: scale(1.05); }
+    }
+
+    @keyframes fade-in {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    /* Pulse and glow adjustments on brackets */
+    @keyframes bracket-pulse {
+        0% {
+            color: #ff007f;
+            text-shadow: 0 0 12px rgba(255, 0, 127, 0.8), 0 0 30px rgba(255, 0, 127, 0.5);
+        }
+        100% {
+            color: #00f2fe; /* Shift hues seamlessly to Cyan */
+            text-shadow: 0 0 12px rgba(0, 242, 254, 0.8), 0 0 30px rgba(0, 242, 254, 0.5);
+        }
+    }
+
+    /* Subtle analog neon flicker to make it feel "alive" */
+    @keyframes neon-flicker {
+        0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+            text-shadow: 
+                0 0 8px rgba(255, 255, 255, 0.9),
+                0 0 18px rgba(0, 242, 254, 0.6),
+                0 0 30px rgba(0, 242, 254, 0.4),
+                0 0 45px rgba(255, 0, 127, 0.3);
+        }
+        20%, 24%, 55% {
+            text-shadow: none;
+            color: rgba(255, 255, 255, 0.5);
+        }
+    }
+
+    /* Progress Subtitle text */
+    .loading-subtitle {
+        margin-top: 180px;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.8rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        font-weight: 700;
+        opacity: 0;
+        animation: fade-in 1.5s forwards ease-out;
+        animation-delay: 0.5s;
+    }
+}

@@ -209,4 +209,165 @@
             }
         }
     }
+
+    /* Container for the side-by-side view */
+    .register-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 5rem;
+        width: 100%;
+        max-width: 1100px;
+        padding: 2rem;
+        z-index: 1;
+
+        @media (max-width: 992px) {
+            flex-direction: column;
+            gap: 3rem;
+            padding: 2rem 1rem;
+        }
+    }
+
+    /* Left side info block */
+    .register-info {
+        flex: 1;
+        max-width: 520px;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        color: #ffffff;
+
+        @media (max-width: 992px) {
+            text-align: center;
+            align-items: center;
+        }
+
+        .project-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(225, 3, 77, 0.1);
+            border: 1px solid rgba(225, 3, 77, 0.25);
+            padding: 0.4rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #ff2a6d;
+            width: fit-content;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 0 15px rgba(225, 3, 77, 0.1);
+
+            .sparkle {
+                animation: pulse 1.5s infinite alternate;
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 850;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 40%, #ff2a6d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            letter-spacing: -1.5px;
+
+            @media (max-width: 576px) {
+                font-size: 2.75rem;
+            }
+        }
+
+        p.tagline {
+            font-size: 1.15rem;
+            color: #9ca3af;
+            line-height: 1.6;
+            margin: 0;
+            font-weight: 450;
+        }
+
+        .overview-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        /* Transparent Glassmorphism Cards */
+        .overview-card {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            gap: 1.25rem;
+            align-items: flex-start;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: default;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.035);
+                border-color: rgba(3, 117, 225, 0.25);
+                transform: translateX(6px);
+                box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.4);
+            }
+
+            .card-icon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 44px;
+                height: 44px;
+                border-radius: 12px;
+                background: rgba(3, 117, 225, 0.1);
+                border: 1px solid rgba(3, 117, 225, 0.2);
+                color: #0375e1;
+                flex-shrink: 0;
+                transition: all 0.3s ease;
+
+                &.red-icon {
+                    background: rgba(225, 3, 77, 0.1);
+                    border: 1px solid rgba(225, 3, 77, 0.2);
+                    color: #ff2a6d;
+                }
+
+                &.purple-icon {
+                    background: rgba(138, 43, 226, 0.15);
+                    border: 1px solid rgba(138, 43, 226, 0.2);
+                    color: #a855f7;
+                }
+            }
+
+            &:hover .card-icon {
+                transform: scale(1.1);
+                box-shadow: 0 0 15px currentColor;
+            }
+
+            .card-content {
+                text-align: left;
+
+                h3 {
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    color: #ffffff;
+                    margin: 0 0 0.35rem 0;
+                    letter-spacing: -0.2px;
+                }
+
+                p {
+                    font-size: 0.925rem;
+                    color: #9ca3af;
+                    line-height: 1.5;
+                    margin: 0;
+                }
+            }
+        }
+    }
 }
