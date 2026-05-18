@@ -1,19 +1,19 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router'
-import "../auth.form.scss"
+import '../auth.form.scss'
 import { useAuth } from '../hooks/useAuth'
 
 const Login = () => {
-
     const { loading, handleLogin } = useAuth()
     const navigate = useNavigate()
 
-    const [ email, setEmail ] = useState("")
-    const [ password, setPassword ] = useState("")
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await handleLogin({email,password})
+        await handleLogin({ email, password })
         navigate('/plan')
     }
 
@@ -35,6 +35,13 @@ const Login = () => {
         card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
     };
 
+    if (loading) {
+        return (
+            <main>
+                <h1>Loading.......</h1>
+            </main>
+        )
+    }
     return (
         <main className="auth-page">
             {/* Dynamic Background Elements */}
@@ -62,17 +69,37 @@ const Login = () => {
                     </div>
                     <div className="input-group">
                         <label htmlFor="password">Password</label>
-                        <div className="input-wrapper">
+                        <div className="input-wrapper" style={{ position: 'relative' }}>
                             <input
                                 onChange={(e) => { setPassword(e.target.value) }}
-                                type="password" id="password" name='password' placeholder='Enter your password' required />
+                                type={showPassword ? 'text' : 'password'} id="password" name='password' placeholder='Enter your password' required />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                style={{
+                                    position: "absolute",
+                                    right: "15px",
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    cursor: "pointer",
+                                    color: "#666",
+                                    fontSize: "12px",
+                                    fontWeight: "bold",
+                                    zIndex: "10",
+                                    backgroundColor: "transparent",
+                                    border: "none",
+                                    padding: "0"
+                                }}
+                            >
+                                {showPassword ? 'Hide' : 'Show'}
+                            </button>
                         </div>
                     </div>
                     <button disabled={loading} className={`button primary-button ${loading ? 'loading' : ''}`} >
                         {loading ? 'Logging in...' : 'Login'}
                     </button>
                 </form>
-                <p className="auth-link">Don't have an account? <Link to={"/"} >Register here</Link> </p>
+                <p className="auth-link">Don't have an account? <Link to={"/register"} >Register here</Link> </p>
             </div>
         </main>
     )
