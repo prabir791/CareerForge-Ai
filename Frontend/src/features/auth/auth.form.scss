@@ -73,6 +73,10 @@
             border-color: rgba(3, 117, 225, 0.3);
         }
     }
+    
+    .password-container {
+        position: relative;
+    }
 
     .form-header {
         text-align: center;
@@ -274,6 +278,7 @@
             font-weight: 850;
             line-height: 1.1;
             background: linear-gradient(135deg, #ffffff 40%, #ff2a6d 100%);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin: 0;
@@ -369,5 +374,27 @@
                 }
             }
         }
+    }
+    
+    .password-container input {
+        width: 100%;
+        box-sizing: border-box;
+        padding-right: 60px;
+    }
+    
+    .show-password {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: rgb(235, 12, 41);
+        font-size: 14px;
+        font-weight: 500;
+    }
+    
+    a{
+        color: #e1034d;
+        text-decoration: none;
     }
 }

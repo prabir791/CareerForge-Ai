@@ -1,14 +1,16 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router'
+import '../auth.form.scss'
 import { useAuth } from '../hooks/useAuth'
 import '../auth.form.scss'
 
 const Register = () => {
 
     const navigate = useNavigate()
-    const [ username, setUsername ] = useState("")
-    const [ email, setEmail ] = useState("")
-    const [ password, setPassword ] = useState("")
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
 
     const {loading,handleRegister} = useAuth()
     
@@ -120,10 +122,30 @@ const Register = () => {
                         </div>
                         <div className="input-group">
                             <label htmlFor="password">Password</label>
-                            <div className="input-wrapper">
+                            <div className="input-wrapper" style={{ position: 'relative' }}>
                                 <input
                                     onChange={(e) => { setPassword(e.target.value) }}
-                                    type="password" id="password" name="password" placeholder="Create a strong password" required minLength={6} />
+                                    type={showPassword ? 'text' : 'password'} id="password" name="password" placeholder="Create a strong password" required minLength={6} />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    style={{
+                                        position: "absolute",
+                                        right: "15px",
+                                        top: "50%",
+                                        transform: "translateY(-50%)",
+                                        cursor: "pointer",
+                                        color: "#666",
+                                        fontSize: "12px",
+                                        fontWeight: "bold",
+                                        zIndex: "10",
+                                        backgroundColor: "transparent",
+                                        border: "none",
+                                        padding: "0"
+                                    }}
+                                >
+                                    {showPassword ? 'Hide' : 'Show'}
+                                </button>
                             </div>
                         </div>
 
