@@ -1,0 +1,321 @@
+@use "sass:math";
+
+.error-page-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #080a0f; /* Deep cyber dark bg */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    overflow: hidden;
+    color: #ffffff;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+    /* Cyber grid overlay */
+    .cyber-grid {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+            linear-gradient(rgba(0, 242, 254, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 242, 254, 0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+        background-position: center center;
+        mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 80%);
+        -webkit-mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 80%);
+        pointer-events: none;
+        animation: grid-pulse 6s infinite ease-in-out alternate;
+    }
+
+    @keyframes grid-pulse {
+        0% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+
+    /* Ambient background glowing orbs */
+    .ambient-glow {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        filter: blur(120px);
+        pointer-events: none;
+        opacity: 0.4;
+        z-index: 0;
+
+        &.cyan {
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            top: 20%;
+            left: 20%;
+            animation: float-glow-1 12s infinite alternate ease-in-out;
+        }
+
+        &.magenta {
+            background: radial-gradient(circle, rgba(255, 0, 127, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+            bottom: 20%;
+            right: 20%;
+            animation: float-glow-2 12s infinite alternate ease-in-out;
+        }
+    }
+
+    @keyframes float-glow-1 {
+        0% { transform: translate(-10%, -10%) scale(1); }
+        100% { transform: translate(10%, 10%) scale(1.2); }
+    }
+
+    @keyframes float-glow-2 {
+        0% { transform: translate(10%, 10%) scale(1.2); }
+        100% { transform: translate(-10%, -10%) scale(1); }
+    }
+
+    /* Glassmorphism main panel */
+    .glass-panel {
+        background: rgba(15, 20, 30, 0.65);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 28px;
+        padding: 3.5rem 3rem;
+        width: 90%;
+        max-width: 520px;
+        z-index: 1;
+        box-shadow: 
+            0 30px 60px -15px rgba(0, 0, 0, 0.6),
+            0 0 50px rgba(0, 242, 254, 0.05);
+        text-align: center;
+        position: relative;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+            border-color: rgba(0, 242, 254, 0.25);
+            box-shadow: 
+                0 35px 70px -15px rgba(0, 0, 0, 0.7),
+                0 0 50px rgba(0, 242, 254, 0.15);
+        }
+    }
+
+    .brand-accent {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(0, 242, 254, 0.08);
+        border: 1px solid rgba(0, 242, 254, 0.2);
+        padding: 0.4rem 1rem;
+        border-radius: 50px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #00f2fe;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+        
+        .sparkle {
+            animation: pulse-sparkle 1.5s infinite alternate;
+        }
+    }
+
+    @keyframes pulse-sparkle {
+        0% { transform: scale(0.9); opacity: 0.7; }
+        100% { transform: scale(1.1); opacity: 1; }
+    }
+
+    /* Glitch text effect for error code */
+    .glitch-wrapper {
+        position: relative;
+        margin-bottom: 1rem;
+    }
+
+    .error-code {
+        font-size: 6rem;
+        font-weight: 900;
+        line-height: 1;
+        margin: 0;
+        letter-spacing: -2px;
+        background: linear-gradient(135deg, #00f2fe 0%, #ff007f 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        position: relative;
+        display: inline-block;
+
+        &::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 2px;
+            text-shadow: -1px 0 #ff007f;
+            top: 0;
+            color: transparent;
+            background: linear-gradient(135deg, #00f2fe 0%, #ff007f 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            overflow: hidden;
+            clip: rect(0, 900px, 0, 0);
+            animation: noise-anim 2s infinite linear alternate-reverse;
+        }
+
+        &::before {
+            content: attr(data-text);
+            position: absolute;
+            left: -2px;
+            text-shadow: -1px 0 #00f2fe;
+            top: 0;
+            color: transparent;
+            background: linear-gradient(135deg, #00f2fe 0%, #ff007f 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            overflow: hidden;
+            clip: rect(0, 900px, 0, 0);
+            animation: noise-anim-2 3s infinite linear alternate-reverse;
+        }
+    }
+
+    @keyframes noise-anim {
+        $steps: 20;
+        @for $i from 0 through $steps {
+            #{math.percentage(math.div($i, $steps))} {
+                clip: rect(math.random(100)+px, 9999px, math.random(100)+px, 0);
+            }
+        }
+    }
+
+    @keyframes noise-anim-2 {
+        $steps: 20;
+        @for $i from 0 through $steps {
+            #{math.percentage(math.div($i, $steps))} {
+                clip: rect(math.random(100)+px, 9999px, math.random(100)+px, 0);
+            }
+        }
+    }
+
+    .error-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.5px;
+    }
+
+    .error-message {
+        font-size: 1rem;
+        color: #9ca3af;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Debug display for developer insights */
+    .error-debug {
+        background: rgba(5, 8, 15, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 1rem;
+        text-align: left;
+        margin-bottom: 2rem;
+        font-size: 0.8rem;
+        max-height: 120px;
+        overflow-y: auto;
+
+        .debug-label {
+            display: block;
+            color: #ff007f;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .debug-content {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.6);
+            white-space: pre-wrap;
+            word-break: break-all;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    }
+
+    /* Buttons groups */
+    .button-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        width: 100%;
+
+        @media (max-width: 480px) {
+            flex-direction: column;
+        }
+    }
+
+    .button {
+        padding: 0.875rem 1.75rem;
+        font-weight: 600;
+        font-size: 0.95rem;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+
+        &.primary-button {
+            background: linear-gradient(135deg, #00f2fe 0%, #0072ff 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(0, 242, 254, 0.3);
+
+            &:hover {
+                box-shadow: 0 6px 20px rgba(0, 242, 254, 0.45);
+                transform: translateY(-2px);
+            }
+
+            &:active {
+                transform: translateY(1px);
+            }
+        }
+
+        &.secondary-button {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+                border-color: rgba(255, 255, 255, 0.2);
+                transform: translateY(-2px);
+            }
+
+            &:active {
+                transform: translateY(1px);
+            }
+
+            .arrow {
+                transition: transform 0.2s ease;
+            }
+
+            &:hover .arrow {
+                transform: translateX(-3px);
+            }
+        }
+    }
+
+    .system-footer {
+        position: absolute;
+        bottom: 2rem;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.25);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 500;
+        z-index: 1;
+        pointer-events: none;
+    }
+}
