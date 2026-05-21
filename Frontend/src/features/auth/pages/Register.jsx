@@ -48,10 +48,8 @@ const Register = () => {
             <div className="register-container">
                 {/* Left Side: Brand & Project Overview */}
                 <div className="register-info">
-                    <div className="project-brand">
-                        <span className="sparkle">✦</span> Powered by Gemini 2.5
-                    </div>
-                    <h1>Generative-AI</h1>
+
+                    <h1>CareerForgeAi</h1>
                     <p className="tagline">
                         A state-of-the-art career acceleration platform that tailors your credentials and prepares you for target placements with laser accuracy.
                     </p>

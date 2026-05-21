@@ -32,7 +32,7 @@ const ErrorPage = () => {
 
             <div className="error-panel glass-panel">
                 <div className="brand-accent">
-                    <span className="sparkle">✦</span> GENERATIVE-AI SUBSYSTEM
+                    <span className="sparkle">✦</span> CAREERFORGEAI SUBSYSTEM
                 </div>
 
                 <div className="glitch-wrapper">

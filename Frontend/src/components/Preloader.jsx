@@ -19,7 +19,7 @@ const Preloader = ({ fadeOut }) => {
                     <h1 className="logo-text">
                         <span className="bracket bracket-left">[</span>
                         <img src="/favicon.png" alt="logo icon" className="logo-icon" />
-                        GENERATIVE-AI
+                        CareerForgeAi
                         <span className="bracket bracket-right">]</span>
                     </h1>
                 </div>
